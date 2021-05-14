@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"benben6515.github.io","root":"/blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Computer Science50是哈佛大學的免費線上課程，沒有程式基礎的人也可以看完，網路有很多資源，就不詳細介紹了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Computer Science (哈佛CS50導讀)- 上">
+<meta property="og:url" content="https://benben6515.github.io/blog/2020/07/12/Code_CS50-1/index.html">
+<meta property="og:site_name" content="士育的小宇宙">
+<meta property="og:description" content="Computer Science50是哈佛大學的免費線上課程，沒有程式基礎的人也可以看完，網路有很多資源，就不詳細介紹了。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-07-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-04T02:18:58.966Z">
+<meta property="article:author" content="Benben">
+<meta property="article:tag" content="程式">
+<meta property="article:tag" content="計算機科學">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://benben6515.github.io/blog/2020/07/12/Code_CS50-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Computer Science (哈佛CS50導讀)- 上 | 士育的小宇宙</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">士育的小宇宙</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">喜歡寫程式，也喜歡寫文字。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://benben6515.github.io/blog/2020/07/12/Code_CS50-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Benben">
+      <meta itemprop="description" content="Don't worry ending, Be happy Coding !">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="士育的小宇宙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Computer Science (哈佛CS50導讀)- 上
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-07-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-12T00:00:00+08:00">2020-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-09-04 10:18:58" itemprop="dateModified" datetime="2020-09-04T10:18:58+08:00">2020-09-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>Computer Science50是哈佛大學的免費線上課程，沒有程式基礎的人也可以看完，網路有很多資源，就不詳細介紹了。</p>
+</blockquote>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3oFAJtFE8YU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<span id="more"></span>
+
+<h2 id="各種進位制"><a href="#各種進位制" class="headerlink" title="各種進位制"></a>各種進位制</h2><ul>
+<li><strong>Binary</strong><br>世界上有1 0種人，一種是懂二進位的人，一種是不懂二進位的人。</li>
+<li><strong>Decimal</strong><br>0, 1, 2, 3, 4, 6, 7, 8, 9</li>
+<li><strong>Octal, Hex</strong><br>0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F</li>
+</ul>
+<h2 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h2><p>RGB一般稱為【色光三原色】，R（red）紅、G（green）綠、B（blue）藍，RGB的顏色階調為0-255<br><strong>R, G, B 分別可以用兩位十六進位來表示:</strong><br>&rArr; #FFFFFF 表示白色，R（red）、G（green）、B（blue）都是最高色階255<br>&rArr; #000000 表示黑色，R（red）、G（green）、B（blue）都是最低色階0<br>&rArr; #FF0000 表示純紅色</p>
+<h2 id="Command-line"><a href="#Command-line" class="headerlink" title="Command line"></a>Command line</h2><p><font color="#dd0000">P</font>rint <font color="#dd0000">W</font>orking <font color="#dd0000">D</font>irectory<br><font color="#dd0000">L</font>ist <font color="#dd0000">S</font>egmant<br><font color="#dd0000">C</font>hange <font color="#dd0000">D</font>irectory<br><font color="#dd0000">M</font>a<font color="#dd0000">K</font>e <font color="#dd0000">DIR</font>ectory<br><font color="#dd0000">R</font>e<font color="#dd0000">M</font>ove<br><font color="#dd0000">M</font>o<font color="#dd0000">V</font>e<br><font color="#dd0000">C</font>o<font color="#dd0000">P</font>y<br><font color="#dd0000">MAN</font>ual</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main(viod) &#123;</span><br><span class="line">	printf(&quot;hello world!&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$ make hello<br>$ ./ helle</p>
+<h2 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h2><ul>
+<li><strong>Preprcessing</strong><br>處理#include</li>
+<li><strong>Compilier</strong><br>C code -&gt; Assembly code</li>
+<li><strong>Assembling</strong><br>Assembly code -&gt; Machine code</li>
+<li><strong>Linding</strong><br>把你的code跟系統的code連結起來</li>
+</ul>
+<h2 id="儲存型態"><a href="#儲存型態" class="headerlink" title="儲存型態"></a>儲存型態</h2><ul>
+<li>Binary 4bit<br>0000 0001 …</li>
+<li>負數(Overflow)<br>把所有bit反轉+1就是負數!</li>
+<li>32bit 最大元素是2^31 - 1<br>2147483647</li>
+</ul>
+<h2 id="C-搜尋法"><a href="#C-搜尋法" class="headerlink" title="C++ |搜尋法"></a>C++ |搜尋法</h2><ul>
+<li><p>線性搜尋<br>一個一個搜</p>
+</li>
+<li><p>二分搜尋法<br>必須是已經排序過的數列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bool seach(int values, int values[], int n) &#123;</span><br><span class="line">	while(L &lt;= R) &#123;</span><br><span class="line">		M = (L+R)/2;</span><br><span class="line">		if (values[M] == values) return true;</span><br><span class="line">		if (values[M] &gt; values) &#123;</span><br><span class="line">			R = M - 1;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			L = M + 1;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="C-排序法"><a href="#C-排序法" class="headerlink" title="C++ |排序法"></a>C++ |排序法</h2><ul>
+<li><p>選擇排序法<br>不斷的找最小值</p>
+</li>
+<li><p>泡沫排序法<br>倆倆比較，順序錯了就交換上來</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void sort(int values[], int n) &#123;</span><br><span class="line">	for(int i=0; i&lt;n; i++) &#123;</span><br><span class="line">		if (values[j] &gt; values[i]) &#123;</span><br><span class="line">			swap(&amp;values[j], &amp;values&#123;j+1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>插入排序法<br>像撲克牌一樣</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">viod insertion_sort(int values[], int n) &#123;</span><br><span class="line">	for(int i=1; i&lt;n; i++) &#123;</span><br><span class="line">		int number = values[i];</span><br><span class="line">		int position = i;</span><br><span class="line">		while(position &gt;=0 &amp;&amp; values&#123;position-1] &gt; number) &#123;&#123;</span><br><span class="line">			values[position] = values[position - 1]&#x27;</span><br><span class="line">			position--;</span><br><span class="line">		&#125;</span><br><span class="line">		values[position] = number;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>合併排序法<br>左右兩邊排好之後再合併起來</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">viod merge(int values[], int stsrt, int middle, int end) &#123;</span><br><span class="line">	int temp[end - start + 1];</span><br><span class="line">	int left = start;</span><br><span class="line">	int right = middle + 1;</span><br><span class="line">	int nowIndex = 0;</span><br><span class="line">	</span><br><span class="line">	while (left &lt;= middle &amp;&amp; right &lt;= end) &#123;</span><br><span class="line">		if (values[left] &lt;= values[right]) &#123;</span><br><span class="line">			temp[nowIndex] = values[left];</span><br><span class="line">			left++;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			temp[nowIndex] = values[right];</span><br><span class="line">			right++;</span><br><span class="line">		&#123;</span><br><span class="line">		nowIndex++;</span><br><span class="line">	&#125;</span><br><span class="line">	while(left &lt;= middle) &#123;</span><br><span class="line">		temp[nowIndex] = values[left];</span><br><span class="line">		nowIndex++;</span><br><span class="line">		left++;</span><br><span class="line">	&#125;</span><br><span class="line">	while(right &lt;= end) &#123;</span><br><span class="line">		temp[nowIndex] = values[right];</span><br><span class="line">		nowIndex++;</span><br><span class="line">		right++;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	for(int i=start; i&lt;=end; i++) &#123;</span><br><span class="line">		values[i] = temp[i-start];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">viod merge_sort(int values[], int start, int end) &#123;</span><br><span class="line">	if (end &gt; start) &#123;</span><br><span class="line">		int middle = (start + end) / 2;</span><br><span class="line">		merge_sort(values, start, middle);</span><br><span class="line">		merge_sort(values, middle+1, end);</span><br><span class="line">		merge(values, start, middle, end);</span><br><span class="line">	&#125;</span><br><span class="line">viod sort(int values[], int n) &#123;</span><br><span class="line">	merge_sort(values, 0, n-1);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>快速排序法<br>找中值，左邊都比值小且右邊都比值大那值就在正確位子</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int partition(int values[], int start, int end) &#123;</span><br><span class="line">	int splitIndex = start + 1;</span><br><span class="line">	for(int i = start+1; i&lt;=end; i++) &#123;</span><br><span class="line">		if (values[i] &lt; pivot) &#123;</span><br><span class="line">			swap(&amp;values[splitIndex], );</span><br><span class="line">			splitIndex++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	swap(&amp;values[splitIndex - 1], &amp;values[start]);</span><br><span class="line">	return splitIndex - 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">viod quick_sort(int values[], inr start, int end) &#123;</span><br><span class="line">	if (end &gt; start) &#123;</span><br><span class="line">		int middle = partition(values, start, end);</span><br><span class="line">		quick_sort(values, start, end);</span><br><span class="line">		quick_sort(values, middle + 1, end);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">viod sort(int values[], int n) &#123;</span><br><span class="line">	quick_sort(values, 0, n-1);</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<h2 id="C-指標-pointer"><a href="#C-指標-pointer" class="headerlink" title="C++ |指標(pointer)"></a>C++ |指標(pointer)</h2><ul>
+<li>一種特殊的資料型態，存的是記憶體的位子。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int a = 20;</span><br><span class="line">int* ptr = &amp;a;</span><br><span class="line">int** p = &amp;ptr;</span><br><span class="line"></span><br><span class="line">ptr -&gt; 0x00 //adress of a</span><br><span class="line">*ptr -&gt; 20 //values of a</span><br><span class="line"></span><br><span class="line">p -&gt; 0x04 //adress of ptr</span><br><span class="line">*p -&gt; 0x00 //values of ptr,adress of a</span><br><span class="line">**p -&gt; 20 //values of a</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="程式底層運作-Heap-ane-Steak"><a href="#程式底層運作-Heap-ane-Steak" class="headerlink" title="程式底層運作(Heap ane Steak)"></a>程式底層運作(Heap ane Steak)</h2><ul>
+<li><p>Heap<br>動態(malloc)取得的記憶體會在這裡</p>
+</li>
+<li><p>Steak<br>儲存function, local, variable的地方</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 因為記憶體位子不一樣，所以不會交換</span><br><span class="line">viod swap(int a, int b)&#123;</span><br><span class="line">	int temp = a;</span><br><span class="line">	a = b;</span><br><span class="line">	b = tenp;</span><br><span class="line">&#125;</span><br><span class="line">int main() &#123;</span><br><span class="line">	int x = 10;</span><br><span class="line">	int y = 5;</span><br><span class="line">	swap(x, y);</span><br><span class="line">	printf(&quot;%d %d\n&quot;, x, y);</span><br><span class="line">&#125;</span><br><span class="line">// 第10行應該改成 -&gt; swap(&amp;x, &amp;y)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Buffer overflow<br>沒有仔細檢查輸入，導致攻擊者可構出造”執行任意程式碼”的payload</li>
+</ul>
+<h2 id="結構-Structure"><a href="#結構-Structure" class="headerlink" title="結構(Structure)"></a>結構(Structure)</h2><p>拿來讀取”有結構”的東西</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">	string name;</span><br><span class="line">	string dorm;</span><br><span class="line">&#125;student;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="圖片解析"><a href="#圖片解析" class="headerlink" title="圖片解析"></a>圖片解析</h2><ul>
+<li>負片效果<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">triple.rabtGreen = abs(255 - triple.rgbtGreen);</span><br><span class="line">triple.rabtBlue = abs(255 - triple.rgbtBlue);</span><br><span class="line">triple.rabtRed = abs(255 - triple.rgbtRed);</span><br></pre></td></tr></table></figure></li>
+<li>黑白效果<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int avg = (triple.rabtGreen + triple.rabtBlue + triple.rabtRed) / 3;</span><br><span class="line">triple.rabtGreen = avg;</span><br><span class="line">triple.rabtBlue = avg;</span><br><span class="line">triple.rabtRed = avg;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="鏈結串列-Linkde-lisr"><a href="#鏈結串列-Linkde-lisr" class="headerlink" title="鏈結串列(Linkde lisr)"></a>鏈結串列(Linkde lisr)</h2><ul>
+<li>優點<br>新增/刪除資料較Array簡單<br>資料數量可以是動態的，不會有resize問題</li>
+<li>缺點<br>搜尋需要從頭開始找起，時間複雜度為O(N)<br>需要額外記憶體來儲存pointer</li>
+</ul>
+<h2 id="佇列-Queue"><a href="#佇列-Queue" class="headerlink" title="佇列(Queue)"></a>佇列(Queue)</h2><p>Queue是具有First-In-First-Out的特徵</p>
+<ul>
+<li>應用:<br>CPU、應表機、網站等一次只能執行一個的需求，因此需要有Queue來安排</li>
+</ul>
+<h2 id="堆疊-Stack"><a href="#堆疊-Stack" class="headerlink" title="堆疊(Stack)"></a>堆疊(Stack)</h2><p>Stack是具有Last-In-Frist-Out的資料結構</p>
+<ul>
+<li>應用:<br>編輯器的undo<br>遊覽器的上一頁</li>
+</ul>
+<h2 id="網路相關知識"><a href="#網路相關知識" class="headerlink" title="網路相關知識"></a>網路相關知識</h2><ul>
+<li>IP位置<br>每台可以上網的電腦，都會有一個IP位置，都是由4個數字組成範圍是0~255，例如:101.13.113.80，四個數字方法叫做IPv4，因應更多IP位置有了IPv6。</li>
+<li>域名(Domain)<br>域名就是我們常用的網址，比起IP可讀且好記，像是Google.com，必須透過DNS(Domain Name System)才能知道確切位置。</li>
+<li>Host<br>域名必須跟域名供應商買，才能確保你連線時連到正確位置，但可以在自己電腦上調整設定檔，像是把127.0.0.1對到localhost這個網址，在自己電腦上建立DNS紀錄，只有在自己電腦上有效，這也是為什麼測試環境沒有設host就連不上的緣故。</li>
+<li>VPN(Virtual Private Network)<br>有些服務會鎖IP，只開放特定IP存取，為了提升安全性，讓一些系統只能從公司內部登入，像是大陸的”翻牆”軟體。</li>
+<li>Status Code<ul>
+<li>200 &rArr; OK</li>
+<li>404 &rArr; ont found</li>
+<li>500 &rArr; internet server error</li>
+</ul>
+</li>
+<li>網頁(HTML)<br>全名是 超文件標示語言(Hyper Text Marup Languge)<br>分成三部分:<table style="width:480px">
+  <tr>
+      <td style="border:0px;">內容與架構</td>
+      <td style="border:0px;">HTML</td>
+      <td style="border:0px;"><font color="#dd0000">&rArr; 骨架</font></td>
+  </tr>
+  <tr>
+      <td style="border:0px;">樣式</td>
+      <td style="border:0px;">CSS</td>
+      <td style="border:0px;"><font color="#dd0000">&rArr; 外觀</font></td>
+  </tr><tr>
+      <td style="border:0px;">程式碼</td>
+      <td style="border:0px;">Javascript</td>
+      <td style="border:0px;"><font color="#dd0000">&rArr; 肌肉</font></td>
+  </tr>
+  <tr>
+</table></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;p&gt;Hello World!&lt;/p&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="登入機制"><a href="#登入機制" class="headerlink" title="登入機制"></a>登入機制</h5><p>發給你一個識別證，你把識別證存起來，之後戴上就好，瀏覽器提供一個地方叫做”Cookie”，可以讓伺服器想要的資訊放這裡。<br>存識別證的地方 &rArr; Cookie<br>對照訪客名冊 &rArr; Sesstion</p>
+<p>More information : <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=3LNrNc8-x_c&list=PLeWlPscCzV-emSo2phZqStPZ0UDKzKu8s&index=1">資料來源</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/%E7%A8%8B%E5%BC%8F/" rel="tag"># 程式</a>
+              <a href="/blog/tags/%E8%A8%88%E7%AE%97%E6%A9%9F%E7%A7%91%E5%AD%B8/" rel="tag"># 計算機科學</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/04/04/Book_financial_freedom/" rel="prev" title="通往財富自由之路">
+      <i class="fa fa-chevron-left"></i> 通往財富自由之路
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2020/07/19/English_pass/" rel="next" title="口說英語通 English All Pass">
+      口說英語通 English All Pass <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E7%A8%AE%E9%80%B2%E4%BD%8D%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">各種進位制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RGB"><span class="nav-number">2.</span> <span class="nav-text">RGB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-line"><span class="nav-number">3.</span> <span class="nav-text">Command line</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Compiler"><span class="nav-number">4.</span> <span class="nav-text">Compiler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%84%B2%E5%AD%98%E5%9E%8B%E6%85%8B"><span class="nav-number">5.</span> <span class="nav-text">儲存型態</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E6%90%9C%E5%B0%8B%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">C++ |搜尋法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E6%8E%92%E5%BA%8F%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">C++ |排序法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E6%8C%87%E6%A8%99-pointer"><span class="nav-number">8.</span> <span class="nav-text">C++ |指標(pointer)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BC%8F%E5%BA%95%E5%B1%A4%E9%81%8B%E4%BD%9C-Heap-ane-Steak"><span class="nav-number">9.</span> <span class="nav-text">程式底層運作(Heap ane Steak)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B5%90%E6%A7%8B-Structure"><span class="nav-number">10.</span> <span class="nav-text">結構(Structure)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%96%E7%89%87%E8%A7%A3%E6%9E%90"><span class="nav-number">11.</span> <span class="nav-text">圖片解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%8F%88%E7%B5%90%E4%B8%B2%E5%88%97-Linkde-lisr"><span class="nav-number">12.</span> <span class="nav-text">鏈結串列(Linkde lisr)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%87%E5%88%97-Queue"><span class="nav-number">13.</span> <span class="nav-text">佇列(Queue)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E7%96%8A-Stack"><span class="nav-number">14.</span> <span class="nav-text">堆疊(Stack)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B6%B2%E8%B7%AF%E7%9B%B8%E9%97%9C%E7%9F%A5%E8%AD%98"><span class="nav-number">15.</span> <span class="nav-text">網路相關知識</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%99%BB%E5%85%A5%E6%A9%9F%E5%88%B6"><span class="nav-number">15.0.0.1.</span> <span class="nav-text">登入機制</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Benben"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Benben</p>
+  <div class="site-description" itemprop="description">Don't worry ending, Be happy Coding !</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:z2266109@gmail.com" title="E-Mail → mailto:z2266109@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100022467427793" title="Facebook → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100022467427793" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>Facebook</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ben6515ben6515/?hl=zh-tw" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ben6515ben6515&#x2F;?hl&#x3D;zh-tw" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Benben</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

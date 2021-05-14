@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"benben6515.github.io","root":"/blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="用 Python 理財課程講義： https:&#x2F;&#x2F;www.finlab.tw&#x2F;mopcon.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 Python 理財">
+<meta property="og:url" content="https://benben6515.github.io/blog/2020/08/12/Code_Python_Finlab/index.html">
+<meta property="og:site_name" content="士育的小宇宙">
+<meta property="og:description" content="用 Python 理財課程講義： https:&#x2F;&#x2F;www.finlab.tw&#x2F;mopcon.html">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-08-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-07T13:29:06.634Z">
+<meta property="article:author" content="Benben">
+<meta property="article:tag" content="理財">
+<meta property="article:tag" content="程式">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://benben6515.github.io/blog/2020/08/12/Code_Python_Finlab/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>用 Python 理財 | 士育的小宇宙</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">士育的小宇宙</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">喜歡寫程式，也喜歡寫文字。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://benben6515.github.io/blog/2020/08/12/Code_Python_Finlab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Benben">
+      <meta itemprop="description" content="Don't worry ending, Be happy Coding !">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="士育的小宇宙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用 Python 理財
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-08-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-12T00:00:00+08:00">2020-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2021-03-07 21:29:06" itemprop="dateModified" datetime="2021-03-07T21:29:06+08:00">2021-03-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="用-Python-理財"><a href="#用-Python-理財" class="headerlink" title="用 Python 理財"></a>用 Python 理財</h3><p>課程講義：</p>
+<p><a target="_blank" rel="noopener" href="https://www.finlab.tw/mopcon.html">https://www.finlab.tw/mopcon.html</a></p>
+<span id="more"></span>
+
+<p>finlab 股票系統：</p>
+<p><a target="_blank" rel="noopener" href="https://ai.finlab.tw/">https://ai.finlab.tw/</a></p>
+<p>Hahow 課程：</p>
+<p><a target="_blank" rel="noopener" href="https://hahow.in/courses/5a2170d5a6d4a5001ec3148d/main?mts_s=ap&mts_m=ha&oasId=5f4793e9211da0aa8ae2f514">用 Python 理財：打造自己的 AI 股票理專</a></p>
+<p><a target="_blank" rel="noopener" href="https://hahow.in/courses/5b875e55297df5001efb869d/main?mts_s=ap&mts_m=ha&oasId=5f4793e9211da0aa8ae2f514">用 Python 理財：打造加密貨幣實戰策略</a></p>
+<h2 id="Investing-V-S-Gambling"><a href="#Investing-V-S-Gambling" class="headerlink" title="Investing V.S. Gambling"></a>Investing V.S. Gambling</h2><p>心理上，賭博與投資兩者的目標都是賺錢沒錯。</p>
+<ul>
+<li>投資<br>是有策略設定一個比較中長期的時間，比如三年、五年或更久，並且計畫累積資產來達到既定的目標</li>
+<li>賭博則是帶有比較娛樂及玩票性質，過程中若讓您一時賺到錢而趕到情緒亢奮與高昂，那麼這就比較接近賭博。<br>為什麼要投資?<br>可以換時間，早一點獲得自由人生。</li>
+</ul>
+<h2 id="Financial-Data"><a href="#Financial-Data" class="headerlink" title="Financial Data"></a>Financial Data</h2><h4 id="Featrues"><a href="#Featrues" class="headerlink" title="Featrues"></a>Featrues</h4><p>我們怎麼去預測股票上漲或下跌?<br>歷史資料、交易紀錄、技術指標…等</p>
+<h4 id="Lables"><a href="#Lables" class="headerlink" title="Lables"></a>Lables</h4><h2 id="Machine-Learning-Models"><a href="#Machine-Learning-Models" class="headerlink" title="Machine Learning Models"></a>Machine Learning Models</h2><h4 id="NN"><a href="#NN" class="headerlink" title="NN"></a>NN</h4><p>Neural Network<br>像是人類的神經</p>
+<h4 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h4><p>Long Short Term Memory Neural Network<br>-Hochreiter 1997</p>
+<h4 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h4><p>Convolutional Neural Network<br>多的神經元一起處理優化速度</p>
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><h4 id="Backtesting"><a href="#Backtesting" class="headerlink" title="Backtesting"></a>Backtesting</h4><p>回測來檢視機械學習是否有效分析Featuresr並且分類Lables</p>
+<h4 id="Purged-K-fold"><a href="#Purged-K-fold" class="headerlink" title="Purged K-fold"></a>Purged K-fold</h4><p>交叉分析</p>
+<ul>
+<li>量化投資<br>相反是主觀操作，量化投資的概念是藉由歷史、技術指標操作避免人性的因素。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/%E7%90%86%E8%B2%A1/" rel="tag"># 理財</a>
+              <a href="/blog/tags/%E7%A8%8B%E5%BC%8F/" rel="tag"># 程式</a>
+              <a href="/blog/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/07/19/English_pass/" rel="prev" title="口說英語通 English All Pass">
+      <i class="fa fa-chevron-left"></i> 口說英語通 English All Pass
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2020/08/27/Book_read_a_book/" rel="next" title="讀懂一本書">
+      讀懂一本書 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8-Python-%E7%90%86%E8%B2%A1"><span class="nav-number">1.</span> <span class="nav-text">用 Python 理財</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Investing-V-S-Gambling"><span class="nav-number"></span> <span class="nav-text">Investing V.S. Gambling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Financial-Data"><span class="nav-number"></span> <span class="nav-text">Financial Data</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Featrues"><span class="nav-number">0.1.</span> <span class="nav-text">Featrues</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lables"><span class="nav-number">0.2.</span> <span class="nav-text">Lables</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Machine-Learning-Models"><span class="nav-number"></span> <span class="nav-text">Machine Learning Models</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NN"><span class="nav-number">0.1.</span> <span class="nav-text">NN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LSTM"><span class="nav-number">0.2.</span> <span class="nav-text">LSTM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CNN"><span class="nav-number">0.3.</span> <span class="nav-text">CNN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluation"><span class="nav-number"></span> <span class="nav-text">Evaluation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Backtesting"><span class="nav-number">0.1.</span> <span class="nav-text">Backtesting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Purged-K-fold"><span class="nav-number">0.2.</span> <span class="nav-text">Purged K-fold</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Benben"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Benben</p>
+  <div class="site-description" itemprop="description">Don't worry ending, Be happy Coding !</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:z2266109@gmail.com" title="E-Mail → mailto:z2266109@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100022467427793" title="Facebook → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100022467427793" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>Facebook</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ben6515ben6515/?hl=zh-tw" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ben6515ben6515&#x2F;?hl&#x3D;zh-tw" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Benben</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
