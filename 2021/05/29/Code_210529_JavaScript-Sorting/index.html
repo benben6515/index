@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"benben6515.github.io","root":"/blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="早學晚學都要的排序 6 位大大們 XD 最近在上 資料結構與演算法 (JavaScript) 的課程 ( 蠻推的 ) 這門課是依照 Introduction to Algorithms ( 第三版 CLRS 版 ) 的課綱編排的課程 就是 零基礎的小明要如何成為前端工程師？裡面 [ 於是長大了以後 ] 那段，小明手中的Introduction to Algorithms 自己整理過會有比較有映像，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript Sorting">
+<meta property="og:url" content="https://benben6515.github.io/blog/2021/05/29/Code_210529_JavaScript-Sorting/index.html">
+<meta property="og:site_name" content="Benben 的小宇宙">
+<meta property="og:description" content="早學晚學都要的排序 6 位大大們 XD 最近在上 資料結構與演算法 (JavaScript) 的課程 ( 蠻推的 ) 這門課是依照 Introduction to Algorithms ( 第三版 CLRS 版 ) 的課綱編排的課程 就是 零基礎的小明要如何成為前端工程師？裡面 [ 於是長大了以後 ] 那段，小明手中的Introduction to Algorithms 自己整理過會有比較有映像，">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-05-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-29T14:37:58.130Z">
+<meta property="article:author" content="Benben">
+<meta property="article:tag" content="JavaScritp">
+<meta property="article:tag" content="演算法">
+<meta property="article:tag" content="排序">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://benben6515.github.io/blog/2021/05/29/Code_210529_JavaScript-Sorting/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>JavaScript Sorting | Benben 的小宇宙</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Benben 的小宇宙</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">喜歡寫程式，也喜歡寫文字。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://benben6515.github.io/blog/2021/05/29/Code_210529_JavaScript-Sorting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Benben">
+      <meta itemprop="description" content="Don't worry ending, Be happy Coding !">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Benben 的小宇宙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript Sorting
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2021-05-29 00:00:00 / 修改時間：22:37:58" itemprop="dateCreated datePublished" datetime="2021-05-29T00:00:00+08:00">2021-05-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>早學晚學都要的排序 6 位大大們 XD</p>
+<p>最近在上 <a target="_blank" rel="noopener" href="https://www.udemy.com/course/algorithm-data-structure/">資料結構與演算法 (JavaScript)</a> 的課程 ( 蠻推的 )</p>
+<p>這門課是依照 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Introduction_to_Algorithms">Introduction to Algorithms</a> ( 第三版 CLRS 版 ) 的課綱編排的課程</p>
+<p>就是 <a target="_blank" rel="noopener" href="https://medium.com/hulis-blog/frontend-engineer-guide-297821512f4e">零基礎的小明要如何成為前端工程師？</a><br>裡面 [ 於是長大了以後 ] 那段，小明手中的<br><code>Introduction to Algorithms</code></p>
+<p>自己整理過會有比較有映像，希望遇到白板可以寫的出來 XD</p>
+<p>也推薦大家理解或是自己整理看看</p>
+<span id="more"></span>
+
+<h2 id="3-種簡單排序-amp-3-種進階排序"><a href="#3-種簡單排序-amp-3-種進階排序" class="headerlink" title="3 種簡單排序 &amp; 3 種進階排序"></a>3 種簡單排序 &amp; 3 種進階排序</h2><p>以下所有的 code : </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">4</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">7</span>]</span><br><span class="line"><span class="built_in">console</span>.log(arr)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;^^^ original ^^^&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Boble ----------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// function sort(arr) &#123;</span></span><br><span class="line"><span class="comment">//   for (let i = 0; i &lt; arr.length - 2; i++) &#123;</span></span><br><span class="line"><span class="comment">//     for (let j = i; j &lt; arr.length - 1; j++) &#123;</span></span><br><span class="line"><span class="comment">//       if (arr[j] &gt; arr[j+1]) &#123;</span></span><br><span class="line"><span class="comment">//         arr[j] = arr[j] + arr[j+1]</span></span><br><span class="line"><span class="comment">//         arr[j+1] = arr[j] - arr[j+1]</span></span><br><span class="line"><span class="comment">//         arr[j] = arr[j] - arr[j+1]</span></span><br><span class="line"><span class="comment">//       &#125;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//     console.log(arr) // debug</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">//   return arr</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// console.log(sort(arr))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Insertion ----------------------------------------- </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// function sort(arr) &#123;</span></span><br><span class="line"><span class="comment">//   for (let j = 1; j &lt; arr.length - 1; j++) &#123;</span></span><br><span class="line"><span class="comment">//     let key = arr[j]</span></span><br><span class="line"><span class="comment">//     let i = j - 1</span></span><br><span class="line"><span class="comment">//     while( i &gt;= 0 &amp;&amp; arr[i] &gt; key)&#123;</span></span><br><span class="line"><span class="comment">//       arr[i + 1] = arr[i]</span></span><br><span class="line"><span class="comment">//       i--</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//     arr[i+1] = key</span></span><br><span class="line"><span class="comment">//     // console.log(arr) // debug</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">//   return arr</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// console.log(sort(arr))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Selection ----------------------------------------- </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// function sort(arr) &#123;</span></span><br><span class="line"><span class="comment">//   for (let i = 0; i &lt; arr.length - 2; i++) &#123;</span></span><br><span class="line"><span class="comment">//     let minIndex = i</span></span><br><span class="line"><span class="comment">//     for (let j = i; j &lt; arr.length - 1; j++) &#123;</span></span><br><span class="line"><span class="comment">//       if (arr[j] &lt; arr[minIndex]) &#123;</span></span><br><span class="line"><span class="comment">//         minIndex = j;</span></span><br><span class="line"><span class="comment">//       &#125;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//     arr[i] = arr[i] + arr[minIndex]</span></span><br><span class="line"><span class="comment">//     arr[minIndex] = arr[i] - arr[minIndex]</span></span><br><span class="line"><span class="comment">//     arr[i] = arr[i] - arr[minIndex]</span></span><br><span class="line"><span class="comment">//     // console.log(arr) //debug</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">//   return arr</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// console.log(sort(arr))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Merge -----------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// function merge(arr1, arr2) &#123;</span></span><br><span class="line"><span class="comment">//   let result = []</span></span><br><span class="line"><span class="comment">//   let i = j = 0</span></span><br><span class="line"><span class="comment">//   while(i &lt; arr1.length &amp;&amp; j &lt; arr2.length) &#123;</span></span><br><span class="line"><span class="comment">//     if (arr1[i] &lt; arr2[j]) &#123;</span></span><br><span class="line"><span class="comment">//       result.push(arr1[i])</span></span><br><span class="line"><span class="comment">//       i++</span></span><br><span class="line"><span class="comment">//     &#125; else &#123;</span></span><br><span class="line"><span class="comment">//       result.push(arr2[j])</span></span><br><span class="line"><span class="comment">//       j++</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">//   while(i &lt; arr1.length) &#123;</span></span><br><span class="line"><span class="comment">//     result.push(arr1[i])</span></span><br><span class="line"><span class="comment">//     i++</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">//   while(j &lt; arr2.length) &#123;</span></span><br><span class="line"><span class="comment">//     result.push(arr2[j])</span></span><br><span class="line"><span class="comment">//     j++</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">//   return result</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// function sort(arr) &#123;</span></span><br><span class="line"><span class="comment">//   if (arr.length === 1) return arr</span></span><br><span class="line"><span class="comment">//   let mid = Math.floor(arr.length / 2)</span></span><br><span class="line"><span class="comment">//   let left = arr.slice(0, mid)</span></span><br><span class="line"><span class="comment">//   let right = arr.slice(mid, arr.length)</span></span><br><span class="line"><span class="comment">//   return merge(sort(left),sort(right))</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// console.log(sort(arr))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Heap Sort -----------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// let heapSize</span></span><br><span class="line"><span class="comment">// function sort(arr) &#123;</span></span><br><span class="line"><span class="comment">//   BuildMaxHeap()</span></span><br><span class="line"><span class="comment">//   for (let i = arr.length - 1; i &gt; 0; i--) &#123;</span></span><br><span class="line"><span class="comment">//     arr[0] = arr[0] + arr[i]</span></span><br><span class="line"><span class="comment">//     arr[i] = arr[0] - arr[i]</span></span><br><span class="line"><span class="comment">//     arr[0] = arr[0] - arr[i]</span></span><br><span class="line"><span class="comment">//     heapSize--</span></span><br><span class="line"><span class="comment">//     MaxHeapify(0)</span></span><br><span class="line"><span class="comment">//     // console.log(arr) // debug</span></span><br><span class="line"><span class="comment">//   &#125; </span></span><br><span class="line"><span class="comment">//   return arr</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// function BuildMaxHeap() &#123;</span></span><br><span class="line"><span class="comment">//   heapSize = arr.length - 1</span></span><br><span class="line"><span class="comment">//   for (let i = Math.floor(heapSize/2); i &gt;= 0; i--) &#123;</span></span><br><span class="line"><span class="comment">//     MaxHeapify(i)</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// function MaxHeapify(i) &#123;</span></span><br><span class="line"><span class="comment">//   let l = i * 2 + 1</span></span><br><span class="line"><span class="comment">//   let r = i * 2 + 2</span></span><br><span class="line"><span class="comment">//   let largest = (l &lt;= heapSize &amp;&amp; arr[l] &gt; arr[i]) ? l : i</span></span><br><span class="line"><span class="comment">//   largest = (r &lt;= heapSize &amp;&amp; arr[r] &gt; arr[largest]) ? r : largest </span></span><br><span class="line"><span class="comment">//   if (largest !== i) &#123;</span></span><br><span class="line"><span class="comment">//     arr[largest] = arr[largest] + arr[i]</span></span><br><span class="line"><span class="comment">//     arr[i] = arr[largest] - arr[i]</span></span><br><span class="line"><span class="comment">//     arr[largest] = arr[largest] - arr[i]</span></span><br><span class="line"><span class="comment">//     MaxHeapify(largest)</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// console.log(sort(arr))</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Quick Sort -----------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// function partition(p,r) &#123;</span></span><br><span class="line"><span class="comment">//   let x = arr[r] // pivot</span></span><br><span class="line"><span class="comment">//   let i = p - 1</span></span><br><span class="line"><span class="comment">//   for (let j = p; j &lt; r; j++) &#123;</span></span><br><span class="line"><span class="comment">//     if (arr[j] &lt;= x) &#123;</span></span><br><span class="line"><span class="comment">//       i++</span></span><br><span class="line"><span class="comment">//       if (i === j) continue</span></span><br><span class="line"><span class="comment">//       arr[i] = arr[i] + arr[j]</span></span><br><span class="line"><span class="comment">//       arr[j] = arr[i] - arr[j]</span></span><br><span class="line"><span class="comment">//       arr[i] = arr[i] - arr[j]</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">//   if (i + 1 === r) return i + 1</span></span><br><span class="line"><span class="comment">//   arr[i + 1] = arr[i + 1] + arr[r]</span></span><br><span class="line"><span class="comment">//   arr[r] = arr[i + 1] - arr[r]</span></span><br><span class="line"><span class="comment">//   arr[i + 1] = arr[i + 1] - arr[r]</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">//   return i + 1</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// function sort(p, r) &#123;</span></span><br><span class="line"><span class="comment">//   // console.log(arr) // debug</span></span><br><span class="line"><span class="comment">//   if (p &lt; r) &#123;</span></span><br><span class="line"><span class="comment">//     let q = partition(p,r)</span></span><br><span class="line"><span class="comment">//     sort(p, q - 1)</span></span><br><span class="line"><span class="comment">//     sort(q + 1, r)</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// sort(0, arr.length - 1)</span></span><br><span class="line"><span class="comment">// console.log(arr)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="以下註解版"><a href="#以下註解版" class="headerlink" title="以下註解版 : "></a>以下註解版 : </h2><h3 id="泡沫排序-Boble"><a href="#泡沫排序-Boble" class="headerlink" title="泡沫排序 Boble"></a>泡沫排序 Boble</h3><ul>
+<li>簡單排序法之一</li>
+<li>時間複雜度 : O(n²)</li>
+<li>邏輯 : 兩兩左右交換</li>
+<li>實作 : 雙重迴圈</li>
+<li>code : <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">2</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> j = i; j &lt; arr.length - <span class="number">1</span>; j++) &#123;</span><br><span class="line">		<span class="comment">// 如果 j 大於 j + 1 項 =&gt; 兩者交換</span></span><br><span class="line">		<span class="keyword">if</span> (arr[j] &gt; arr[j+<span class="number">1</span>]) &#123;</span><br><span class="line">			<span class="comment">// 交換 j &amp; j + 1</span></span><br><span class="line">			arr[j] = arr[j] + arr[j+<span class="number">1</span>]</span><br><span class="line">			arr[j+<span class="number">1</span>] = arr[j] - arr[j+<span class="number">1</span>]</span><br><span class="line">			arr[j] = arr[j] - arr[j+<span class="number">1</span>]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">console</span>.log(arr) <span class="comment">// debug</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sort(arr))</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="插入排序法-Insertion"><a href="#插入排序法-Insertion" class="headerlink" title="插入排序法 Insertion"></a>插入排序法 Insertion</h3><ul>
+<li>簡單排序之一</li>
+<li>時間複雜度 : O(n²)</li>
+<li>邏輯 : 從左到右，將右邊的數插入正確的位置</li>
+<li>實作 : for 迴圈 + while 迴圈</li>
+<li>code : <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">1</span>; j &lt; arr.length - <span class="number">1</span>; j++) &#123;</span><br><span class="line">		<span class="comment">// key 為當前的值</span></span><br><span class="line">		<span class="keyword">let</span> key = arr[j]</span><br><span class="line">		<span class="comment">// 從 key 的左邊開始找</span></span><br><span class="line">		<span class="keyword">let</span> i = j - <span class="number">1</span></span><br><span class="line">		<span class="comment">// 當 arr[i] 的值大於 key ， 將 i + 1 的位置空出來</span></span><br><span class="line">		<span class="keyword">while</span>( i &gt;= <span class="number">0</span> &amp;&amp; arr[i] &gt; key)&#123;</span><br><span class="line">		arr[i + <span class="number">1</span>] = arr[i]</span><br><span class="line">		i--</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 將 key 放入 i + 1 位置</span></span><br><span class="line">		arr[i+<span class="number">1</span>] = key</span><br><span class="line">		<span class="comment">// console.log(arr) // debug</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="選擇排序法-Selection"><a href="#選擇排序法-Selection" class="headerlink" title="選擇排序法 Selection"></a>選擇排序法 Selection</h3><ul>
+<li>簡單排序法之一</li>
+<li>時間複雜度 : O(n²)</li>
+<li>邏輯 : 依序選擇最小的值，排到最前面</li>
+<li>實作 : 雙重迴圈</li>
+<li>code : <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">2</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">let</span> minIndex = i</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> j = i; j &lt; arr.length - <span class="number">1</span>; j++) &#123;</span><br><span class="line">	<span class="comment">// 找出最小值</span></span><br><span class="line">	<span class="keyword">if</span> (arr[j] &lt; arr[minIndex]) &#123;</span><br><span class="line">		minIndex = j;</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 將最小值交換到最前面</span></span><br><span class="line">	arr[i] = arr[i] + arr[minIndex]</span><br><span class="line">	arr[minIndex] = arr[i] - arr[minIndex]</span><br><span class="line">	arr[i] = arr[i] - arr[minIndex]</span><br><span class="line">	<span class="comment">// console.log(arr) //debug</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="合併排序法-Merge"><a href="#合併排序法-Merge" class="headerlink" title="合併排序法 Merge"></a>合併排序法 Merge</h3><ul>
+<li>進階排序之一</li>
+<li>時間複雜度 : O(n * log n)</li>
+<li>邏輯 : divide and conquer ，將 array 拆成較小的 array 再排序</li>
+<li>實作 : 拆成兩個 function<ul>
+<li>marge : 將兩個排序好的 array 合併成一個 array</li>
+<li>sort ( 遞迴 ) : 將 array 拆成左右兩個 array</li>
+</ul>
+</li>
+<li>code : <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">arr1, arr2</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> result = []</span><br><span class="line">	<span class="keyword">let</span> i = j = <span class="number">0</span></span><br><span class="line">	<span class="comment">// 將 arr1 或 arr2 較小的數放入 result</span></span><br><span class="line">	<span class="keyword">while</span>(i &lt; arr1.length &amp;&amp; j &lt; arr2.length) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr1[i] &lt; arr2[j]) &#123;</span><br><span class="line">		result.push(arr1[i])</span><br><span class="line">		i++</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		result.push(arr2[j])</span><br><span class="line">		j++</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 如果其中一個放完了，將剩下的放入 reslut</span></span><br><span class="line">	<span class="keyword">while</span>(i &lt; arr1.length) &#123;</span><br><span class="line">		result.push(arr1[i])</span><br><span class="line">		i++</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(j &lt; arr2.length) &#123;</span><br><span class="line">		result.push(arr2[j])</span><br><span class="line">		j++</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 如果長度等於 1 就已經排序好了</span></span><br><span class="line">	<span class="keyword">if</span> (arr.length === <span class="number">1</span>) <span class="keyword">return</span> arr</span><br><span class="line">	<span class="comment">// 將 mid 設為 arr 的中點</span></span><br><span class="line">	<span class="keyword">let</span> mid = <span class="built_in">Math</span>.floor(arr.length / <span class="number">2</span>)</span><br><span class="line">	<span class="keyword">let</span> left = arr.slice(<span class="number">0</span>, mid)</span><br><span class="line">	<span class="keyword">let</span> right = arr.slice(mid, arr.length)</span><br><span class="line">	<span class="comment">// 將左右兩個 array 合併 ( sort 會回傳排序好的 array )</span></span><br><span class="line">	<span class="keyword">return</span> merge(sort(left),sort(right))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="堆積排序-Heap-Sort"><a href="#堆積排序-Heap-Sort" class="headerlink" title="堆積排序 Heap Sort"></a>堆積排序 Heap Sort</h3><ul>
+<li>進階排序之一</li>
+<li>時間複雜度 : O(n * log n)</li>
+<li>邏輯 : 使用 Max Heap 最大堆積樹的特性來進行排序</li>
+<li>實作 : 拆成三個 function<ul>
+<li><strong>BulidMaxHeap</strong> : 建立 Max Heap 樹，將原 array 轉成 Max Heap</li>
+<li><strong>MaxHeapify ( 遞迴 )</strong> : 維持 Max Heap </li>
+<li><strong>sort</strong> : 一開始先建立 Max Heap，將 arr[0] ( 最大值 ) 換到最後面，並且將它排除 Max Heap 再去呼叫 MaxHeapify(0) 繼續維持 Max Heap</li>
+</ul>
+</li>
+<li>code :</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> heapSize</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// 建立 Max Heap</span></span><br><span class="line">	BuildMaxHeap()</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = arr.length - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">		<span class="comment">// 從最後依序交換 arr[0] ( 最大值 )</span></span><br><span class="line">		arr[<span class="number">0</span>] = arr[<span class="number">0</span>] + arr[i]</span><br><span class="line">		arr[i] = arr[<span class="number">0</span>] - arr[i]</span><br><span class="line">		arr[<span class="number">0</span>] = arr[<span class="number">0</span>] - arr[i]</span><br><span class="line">		<span class="comment">// 將 Max Heap 長度減一，因為最後一位已經排序好了</span></span><br><span class="line">		heapSize--</span><br><span class="line">		<span class="comment">// 將新的 arr[0] 傳入 MaxHeapigy ，維持 Max Heap</span></span><br><span class="line">		MaxHeapify(<span class="number">0</span>)</span><br><span class="line">		<span class="comment">// console.log(arr) // debug</span></span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">BuildMaxHeap</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="comment">// heapSize 可以想成當前 Max Heap 的 length</span></span><br><span class="line">	heapSize = arr.length - <span class="number">1</span></span><br><span class="line">	<span class="comment">// 因為 Max Heap 的樹，所以從 heapSize / 2 開始呼叫 MaxHeapify ，迴圈跑完 Max Heap 也建立好了</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="built_in">Math</span>.floor(heapSize/<span class="number">2</span>); i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">		MaxHeapify(i)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MaxHeapify</span>(<span class="params">i</span>) </span>&#123;    </span><br><span class="line">	<span class="comment">// 最關鍵的地方</span></span><br><span class="line">	<span class="comment">// l 為 i 的左子節點  ( ref : https://zh.wikipedia.org/zh-tw/%E4%BA%8C%E5%8F%89%E6%A0%91 )</span></span><br><span class="line">	<span class="comment">// r 為 i 的右子節點</span></span><br><span class="line">	<span class="keyword">let</span> l = i * <span class="number">2</span> + <span class="number">1</span></span><br><span class="line">	<span class="keyword">let</span> r = i * <span class="number">2</span> + <span class="number">2</span></span><br><span class="line">	<span class="comment">// l 跟 r 必須小於 heapSize 不然會選到排序好的數</span></span><br><span class="line">	<span class="comment">// 判斷 i , l, r 哪一個 index 的值最大，並將他設為 largest</span></span><br><span class="line">	<span class="keyword">let</span> largest = (l &lt;= heapSize &amp;&amp; arr[l] &gt; arr[i]) ? l : i</span><br><span class="line">	largest = (r &lt;= heapSize &amp;&amp; arr[r] &gt; arr[largest]) ? r : largest </span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果 largest 不等於 i ，將 arr[i] 換成最大值</span></span><br><span class="line">	<span class="comment">// 因為有交換所以有可能需要繼續維持 Max Heap，並呼叫 MaxHeapify(largest)</span></span><br><span class="line">	<span class="keyword">if</span> (largest !== i) &#123;</span><br><span class="line">		arr[largest] = arr[largest] + arr[i]</span><br><span class="line">		arr[i] = arr[largest] - arr[i]</span><br><span class="line">		arr[largest] = arr[largest] - arr[i]</span><br><span class="line">		MaxHeapify(largest)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="快速排序-Quick-Sort"><a href="#快速排序-Quick-Sort" class="headerlink" title="快速排序 Quick Sort"></a>快速排序 Quick Sort</h3><ul>
+<li>進階排序之一</li>
+<li>時間複雜度 : O( n * log n )</li>
+<li>邏輯 : 選擇一個樞 ( pivot )，將比他大的分到右邊、比他小的分到左邊，則這一個樞已經排序好了</li>
+<li>實作 : 拆成兩個 function<ul>
+<li>partition : 依照樞的值分左右各一組，並且回傳已排序好樞的 index</li>
+<li>sort ( 遞迴 ) : 將 array 分成三個部分，q ( 已排序好的 index )、arr[p, q - 1]、arr[q + 1, r]，遞迴呼叫自己排序左右兩個 array，產生更多排序好的 index </li>
+</ul>
+</li>
+<li>code : </li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">partition</span>(<span class="params">p,r</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// x 為 pivot</span></span><br><span class="line">	<span class="keyword">let</span> x = arr[r] </span><br><span class="line">	<span class="comment">// i 為當前 partition 最前面 - 1 格的 index</span></span><br><span class="line">	<span class="keyword">let</span> i = p - <span class="number">1</span></span><br><span class="line">	<span class="comment">// 從當前 partition 最左邊開始</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> j = p; j &lt; r; j++) &#123;</span><br><span class="line">		<span class="comment">// 如果 arr[j] 小於 x 則 i++，i 為當前小於 x 的最後一個 index</span></span><br><span class="line">		<span class="keyword">if</span> (arr[j] &lt;= x) &#123;</span><br><span class="line">			i++</span><br><span class="line">			<span class="comment">// 交換 i &amp; j</span></span><br><span class="line">			<span class="keyword">if</span> (i === j) <span class="keyword">continue</span></span><br><span class="line">			arr[i] = arr[i] + arr[j]</span><br><span class="line">			arr[j] = arr[i] - arr[j]</span><br><span class="line">			arr[i] = arr[i] - arr[j]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 到這邊表示已經分類好的，交換 i + 1 跟 r 的值</span></span><br><span class="line">	<span class="comment">// i 為小於 x 的最後一個 index，所以交換 i + 1 &amp; r 後，則 r 已排序好</span></span><br><span class="line">	<span class="comment">// 交換 i + 1 &amp; r</span></span><br><span class="line">	<span class="keyword">if</span> (i + <span class="number">1</span> === r) <span class="keyword">return</span> i + <span class="number">1</span></span><br><span class="line">	arr[i + <span class="number">1</span>] = arr[i + <span class="number">1</span>] + arr[r]</span><br><span class="line">	arr[r] = arr[i + <span class="number">1</span>] - arr[r]</span><br><span class="line">	arr[i + <span class="number">1</span>] = arr[i + <span class="number">1</span>] - arr[r]</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 回傳 i + 1 的 index ( arr[i+1] 的值是 r ，已排序好)</span></span><br><span class="line">	<span class="keyword">return</span> i + <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sort</span>(<span class="params">p, r</span>) </span>&#123;</span><br><span class="line">	<span class="comment">// console.log(arr) // debug</span></span><br><span class="line">	<span class="comment">// 如果 index 的 p &lt; r ，則開始排序</span></span><br><span class="line">	<span class="keyword">if</span> (p &lt; r) &#123;</span><br><span class="line">		<span class="comment">// 將 q 設為 parition 的回傳 index</span></span><br><span class="line">		<span class="keyword">let</span> q = partition(p,r)</span><br><span class="line">		<span class="comment">// 此時 q 已排序好，遞迴呼叫 q 兩邊還沒排序好的 array</span></span><br><span class="line">		sort(p, q - <span class="number">1</span>)</span><br><span class="line">		sort(q + <span class="number">1</span>, r)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">sort(<span class="number">0</span>, arr.length - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Ref"><a href="#Ref" class="headerlink" title="Ref."></a>Ref.</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://www.udemy.com/course/algorithm-data-structure/">資料結構與演算法 (JavaScript)</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Introduction_to_Algorithms">Introduction to Algorithms</a> ( 第三版 CLRS 版 ) </li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/hulis-blog/frontend-engineer-guide-297821512f4e">零基礎的小明要如何成為前端工程師？</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.huli.tw/2017/08/27/review-the-classical-sort-algorithm-with-javascript/">一起用 JavaScript 來複習經典排序法吧！</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/JavaScritp/" rel="tag"># JavaScritp</a>
+              <a href="/blog/tags/%E6%BC%94%E7%AE%97%E6%B3%95/" rel="tag"># 演算法</a>
+              <a href="/blog/tags/%E6%8E%92%E5%BA%8F/" rel="tag"># 排序</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/05/18/Code_210521_MRT05-week5/" rel="prev" title="MTR05 第一個月心得">
+      <i class="fa fa-chevron-left"></i> MTR05 第一個月心得
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%A8%AE%E7%B0%A1%E5%96%AE%E6%8E%92%E5%BA%8F-amp-3-%E7%A8%AE%E9%80%B2%E9%9A%8E%E6%8E%92%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">3 種簡單排序 &amp; 3 種進階排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E8%A8%BB%E8%A7%A3%E7%89%88"><span class="nav-number">2.</span> <span class="nav-text">以下註解版 : </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A1%E6%B2%AB%E6%8E%92%E5%BA%8F-Boble"><span class="nav-number">2.1.</span> <span class="nav-text">泡沫排序 Boble</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F%E6%B3%95-Insertion"><span class="nav-number">2.2.</span> <span class="nav-text">插入排序法 Insertion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%B8%E6%93%87%E6%8E%92%E5%BA%8F%E6%B3%95-Selection"><span class="nav-number">2.3.</span> <span class="nav-text">選擇排序法 Selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E4%BD%B5%E6%8E%92%E5%BA%8F%E6%B3%95-Merge"><span class="nav-number">2.4.</span> <span class="nav-text">合併排序法 Merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%E7%A9%8D%E6%8E%92%E5%BA%8F-Heap-Sort"><span class="nav-number">2.5.</span> <span class="nav-text">堆積排序 Heap Sort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-Quick-Sort"><span class="nav-number">2.6.</span> <span class="nav-text">快速排序 Quick Sort</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ref"><span class="nav-number">2.6.1.</span> <span class="nav-text">Ref.</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Benben"
+      src="/blog/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Benben</p>
+  <div class="site-description" itemprop="description">Don't worry ending, Be happy Coding !</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/benben6515" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;benben6515" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:z2266109@gmail.com" title="E-Mail → mailto:z2266109@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/profile.php?id=100022467427793" title="Facebook → https:&#x2F;&#x2F;www.facebook.com&#x2F;profile.php?id&#x3D;100022467427793" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>Facebook</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.instagram.com/ben6515ben6515/?hl=zh-tw" title="Instagram → https:&#x2F;&#x2F;www.instagram.com&#x2F;ben6515ben6515&#x2F;?hl&#x3D;zh-tw" rel="noopener" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Benben</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
